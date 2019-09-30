@@ -1,0 +1,59 @@
+﻿Projeto Final ICD
+Descrição
+
+
+Neste projeto vamos usar as técnicas que aprendemos em sala de aula em alguns problemas de ciência de dados. Para tal, você vai gerar um relatório (Notebook ou Latex) analisando uma base de dados de seu interesse. Caso queira, existem bases de dados que sugerimos listadas abaixo. O importante é que seja uma análise além do trivial (computar uma média) de uma base que necessita de ao menos exploração, testes e inferência. Você pode usar bases do seu IC/Trabalho.
+Tarefas
+
+
+Com base no cronograma abaixo, você vai ser avaliado nas seguintes tarefas:
+1. Definir Tema e grupo. Preencher planilha [EM BREVE]. Grupos de no máximo três pessoas! Quanto mais pessoas mais trabalho será esperado do relatório. (2pts).
+   1. Ao definir o tema, defina também. Uma base de dados, temos idéias abaixo.
+   2. Quais são as perguntas de ciência de dados que vão ser abordadas
+   3. Descreva brevemente a base, colunas, linhas, tipos de dados e natureza da mesma.
+1. Discussão com Monitores: Após definir o passo acima, você já pode iniciar o trabalho do projeto. Recomendamos que seja feito ao menos uma reunião intermediária com os monitores. Marque um horário no moodle e apresente a sua ideia. (3 pts)
+2. Relatório Final: Entregue um relatório sobre os resultados que você levantou para responder às suas perguntas. Sua análise dos dados deve apresentar:
+   1. Uma caracterização (análise exploratória) inicial dos dados (2pts)
+   2. Pelo menos, dois testes de hipótese/intervalos de confiança (2pts)
+      1. Os ICs podem ser apresentados nos resultados de regressão e classificação abaixo.
+      2. Os testes de hipótese também podem ser utilizados abaixo para comparar modelos.
+   1. Pelo menos uma regressão (3pts)
+   2. Pelo menos um algoritmo de aprendizado/classificação (3pts)
+No seu relatório, você deve apresentar pelo menos os seguintes pontos:
+   1. Introdução com Motivação e Pergunta de Pesquisa
+   2. Metodologia
+      1. Descreva sua base
+      2. Quais métodos e modelos foram utilizados. Justifique os mesmos.
+   1. Resultados. Sugiro separar em
+      1. Caracterização (análise exploratória)
+         1. Testes de hipótese podem vir aqui.
+      1. Previsão (uma ou duas sub-seções dependendo dos modelos utilizados)
+   1. Conclusões
+      1. Responda sua pergunta pelo menos de forma evidencial.
+1. Vídeo no Youtube 5 minutos. Pode ser um vídeo só dos slides!! Com as falas, claro. 5pts. 
+Cronograma
+
+
+	Atividade
+	Data
+	1
+	Definição de Tema e Grupos
+	Até o dia 30/09
+	2
+	Discussão com Monitores (marquem horário)
+	Até o dia 30/10
+	3
+	Entrega Final
+	Até o dia 30/11
+	4
+	Vídeo no YouTube
+	Até o dia 30/11
+	
+
+Possíveis Bases
+
+
+Saúde: https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
+Esporte: https://www.kaggle.com/karangadiya/fifa19
+Jogos: https://www.kaggle.com/chuckephron/leagueoflegends OU https://www.kaggle.com/rounakbanik/pokemon 
+Texto (ver com Túlio): eu posso passar parte da minha base de sequências de comentários (ID_tópico, timestamp, ID_usuario, conteúdo textual)

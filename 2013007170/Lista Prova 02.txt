@@ -1,0 +1,187 @@
+﻿Lista Prova 02 - Introdução à Ciência de Dados
+Open Intro Statistics (OIS): http://www.tf.uns.ac.rs/~omorr/radovan_omorjan_003_prII/r-examples/os3.pdf 
+Amostragem
+1. Indique casos onde queremos realizar:
+   1. Amostras uniformes sem reposição.
+   2. Amostras com reposição.
+   3. Amostragem snowball.
+   4. Amostragem estratificada.
+1. Qual o problema de uma amostragem snowball em um grafo dirigido?
+2. Qual o problema de realizar pequenas amostras sem reposição e sem estratificação quando temos grupos de interesse?
+3. Idealmente, sempre queremos muitas amostras independentes realizadas de maneira uniforme de uma população. Nem sempre isto é possível. Quais são as limitações que encontramos nestes casos (V ou F):
+   1. Alguns resultados, tipo o teorema central do limite podem não ser aplicados.
+   2. Teremos sempre poucas amostras e nunca vamos superar n > 30.
+   3. O uso de métodos não paramétricos, estilo o bootstrap, se torna interessante pois não assumem distribuições dos dados.
+   4. Nunca vamos sofrer de grupos sub-representados.
+1. Leia a afirmativa ao lado e guarde ela consigo pelo resto de sua vida: "Caso os dados não respondam suas perguntas você pode: (1) mudar os dados; (2) mudar as perguntas". Só isto. Por isso nosso trabalho consiste muito de: (1) Realizar perguntas; (2) coletar e limpar dados; (3) iterar até ficarmos felizes.
+ICs “Clássico”
+  
+
+
+
+1. Na Figura acima temos a Normal(0, 1). Sobre a mesma, podemos afirmar que:
+   1. A média é 0 e o desvio padrão é 1
+   2. O desvio padrão é 0 e a média é 1
+   3. A probabilidade de P(X < -2] é igual a probabilidade de P[X > 2]
+   4. 95% dos casos estão entre -2.58 e 2.58
+   5. 95% dos casos estão entre -1.96 e 1.96
+
+   1. O código abaixo simula 30 pontos de uma Normal(10, 2). 
+>>> x = np.random.normal(10, 2, size=30)
+>>> x
+array([ 11.2203481 ,   9.76770141,  10.91638956,  12.0466702 ,
+         7.58941694,  12.24482013,  12.215846  ,  10.28819543,
+         9.85944841,  12.28869708,   8.82925801,   8.32704873,
+        10.61047343,  10.94673038,   8.43394436,  10.612731  ,
+         7.33581624,  10.69885301,  12.07710229,  11.28313413,
+        13.8271201 ,   8.43691134,   9.46494778,   7.16041107,
+         9.55048829,  14.0477732 ,  10.76892648,   9.77338108,
+         7.66128932,   8.19221887])
+
+
+Agora, yi ~ Normal(10, 200). "~" significa que vem da distribuição. Fazemos isto para 30 vezes i ∈ [0, 29).
+
+>>> y = np.random.normal(10, 200, size=30)
+>>> y
+array([-398.77932582, -275.8917115 , -113.31931635,   27.79877623,
+        199.28233817,   47.40126519,  -50.30975411,   30.27839754,
+       -447.76539894,  -30.27090782, -110.07579398, -276.52455226,
+       -359.46687024, -162.71653988,  364.08772147,    9.30869405,
+        120.68377433, -128.65952357,  216.44503791, -298.90587063,
+        250.68356457,  -58.33026034,  121.30362956, -215.40612384,
+        264.76489283,  569.00001614, -374.19892862,   15.42862133,
+       -163.08376922,  201.10218647])
+
+
+   1. Compute um intervalo de confiança de 95% dos dados x e y. 
+   2. Além do mais, responda às seguintes perguntas como V ou F:
+   1. O intervalo de y é maior (em tamanho) do que o de x pois y tem uma variância maior.
+   2. É esperado um decrescimento do tamanho intervalo com um aumento do desvio padrão.
+   3. Caso fosse simulado 
+y = np.random.normal(10, 200, size=3000). O intervalo iria aumentar.
+   4. Caso fosse computado um intervalo com 99% de confiança, o mesmo iria reduzir em tamanho.
+
+
+      1. Querendo brincar com ICs um aluno fez o seguinte código. O mesmo simula dados de uma distribuição Pareto: xi ~ Pareto(1). Um fator da distribuição Pareto (leia no Wikipedia) é que a mesma de variância infinita quando seu único parâmetro ɑ = 1.
+
+import numpy as np
+
+x = np.random.pareto(1, size=30000)
+l = x.mean() - 1.96 * (x.std(ddof=1)/np.sqrt(30000))
+h = x.mean() + 1.96 * (x.std(ddof=1)/np.sqrt(30000))
+
+print(l)
+print(h)
+
+for _ in range(100):
+   m = np.random.pareto(1, size=30000).mean()
+   print(m > h or m < l)
+	
+
+        Ao executar o código, o aluno verificou que a maioria das saídas eram `True`. Ou
+seja, a média de outras 100 amostras (no laço for), estavam fora do IC. Sabendo disto, responda V ou F para a seguinte afirmativa e justifique: "O uso de ICs para a média não funciona quando a variância é infinita.". Dica, (1) basta usar a fórmula do IC para ver como o mesmo é afetado pelo desvio padrão; (2) Se a variância é infinita, qual a nossa expectativa da próxima amostra?
+
+
+         1. Agora, o aluno fez uso do seguinte código (abaixo). Note como o código agora realiza amostras onde a média e a variância de uma amostra depende da média e da variância de uma amostra anterior. Ao executar o código, foi averiguado que boa parte das amostras do segundo laço não caem dentro do IC. Então, podemos afirmar que (justifique):
+         1. Embora não seja o mesmo algoritmo, estamos realizando um processo similar à amostragem snowball. Então, vamos sofrer do problema de ficar preso em uma região com parâmetros viesados.
+         2. Ao realizar amostras dependentes quebramos uma premissa forte do Teorema Central do Limite.
+         3. Ao realizar amostras dependentes, lentamente caminhamos para longe da amostra inicial (faça um plot de mean e std).
+import numpy as np
+
+x = []
+mean = 10
+std = 10
+for _ in range(30000):
+   s = np.random.normal(mean, std, size=30)
+   mean = s.mean()
+   std = s.std(ddof=1)
+   x.append(mean)
+
+x = np.array(x)
+l = x.mean() - 1.96 * (x.std(ddof=1)/np.sqrt(30000))
+h = x.mean() + 1.96 * (x.std(ddof=1)/np.sqrt(30000))
+
+sum_ = 0
+for _ in range(100):
+   m = np.random.normal(10, 10, size=30000).mean()
+   sum_ += m > h or m < l
+print(sum_ / 100)
+	
+
+         1. Após responder as perguntas acima, escreva em uma única frase a definição de um intervalo de confiança. Indique quando o mesmo deve ser utilizado e quando não deve.
+
+
+OIS (PG 206)
+
+
+4.7, 4.9, 4.12, 4.14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bootstrap
+         1. Sobre o bootstrap, indique qual afirmativa é falsa e justifique:
+         1. Podemos realizar o bootstrap da média, mediana e média geométrica pois as mesmas são tendências centrais.
+         2. Para realizar o bootstrap precisamos de amostras com reposição.
+         3. Podemos computar o bootstrap da valores extremos como P[X <= x] = 0.99.
+         4. Quando os dados seguem uma distribuição normal (e.g., médias de amostras, quando aplicamos o TCL), o bootstrap tende a gerar o mesmo resultado do que um IC clássico (dentro de um pequeno erro, claro).
+
+
+         1. Um aluno de ICD decidiu sair na UFMG e perguntar para 300 alunos qual o interesse dos mesmo em Ciência de Dados. Ao retornar, o aluno computou que: 25% dos alunos não conheciam o termo; 35% dos alunos conheciam mas falaram que não tinham interesse na área; e, 40% dos alunos tinham interesse na área de ciência de dados. Note que cada caso deste pode ser visto como uma variável Bernoulli (https://en.wikipedia.org/wiki/Bernoulli_distribution). A variância de uma Bernoulli é dado por p(1-p). Ou seja, a variância dos alunos sem interesse é de: (0.25 * (1- 0.25). Vamos praticar um código de Bootstrap.
+         1. Compute um intervalo de confiança para este caso usando a forma clássica: mean +- SE.
+         2. Após isto, compute intervalos usando um bootstrap. Valide seu código com o caso acima.
+         3. Temos evidências de que mais alunos se interessam por ICD do que não se interessam? Quais são as várias formas de responder esta hipótese?
+
+
+         1. Um aluno de ICD decidiu realizar um experimento onde verifica a fração de tempo que um dado programa gasta em operações de CPU e operações de entrada e saída (usando o disco rígido). O aluno computou amostras da seguinte forma:
+      cpu  disco
+0    0.34   0.66
+1    0.00   1.00
+2    0.08   0.92
+3    0.00   1.00
+4    0.00   1.00
+. . .
+
+
+        Ao verificar tais amostras, o aluno decidiu computar um intervalo de confiança para o
+a fração média de tempo o programa (note que é o mesmo programa em cada linha)
+gasta em CPU. Implemente um código de bootstrap e indique o IC. Qual média você 
+vai usar neste caso? Seria possível usar um IC clássico?
+ 
+         1. Por fim, simule dados de duas distribuições (Pode ser uma Normal e uma Pareto). Implemente um bootstrap para a mediana. Brinque com os seguintes casos e escreva os resultados. Interprete os mesmos!
+         1. A amostra inicial tem um tamanho pequeno (n=10, ou 5).
+         2. Realizamos poucas amostras para computar o bootstrap (100 ou 1000).
+         3. Realizamos muitas amostras com dados suficientes (n > 30 e mais de 10,000 amostras).
+         4. Realizamos amostras sem reposição.
+
+
+Testes de Hipóteses e Testes Permutação
+         1. Em alguns casos, podemos realizar testes de hipóteses sem usar intervalos de confiança, bootstrap, ou testes de permutação. Tal situação ocorre quando:
+         1. Quando o processo de amostragem foi feito com reposição. Assim estamos num caso similar ao bootstrap.
+         2. É simples gerar um modelo aleatório de amostragem da população. Assim podemos comparar nossos dados com amostras sintéticas.
+         3. Quando a população de interesse é muito grande, assim qualquer amostra se aproxima de tal população.
+         4. Quando a população é muito pequena, podemos apenas descrever nossos dados (visualizar os dados).
+         5. Quando a população é muito pequena, podemos comparar os dados com nossas hipóteses iniciais.
+
+
+         1. Efeito placebo. É argumentável que o efeito placebo existe (embora controverso). Quais seriam algumas das formas de testar hipóteses sobre a existência de tais efeitos:
+         1. Distribuir medicamentos reais e placebo de forma uniformemente aleatória em uma dada população no geral. Ou seja, realizar uma amostra uniforme da população e para cada pessoa escolher entre real e placebo com p=50%.
+         2. Realizar uma amostragem snowball onde cada pessoa deve repassar medicamentos reais e placebos para amigos da sua escolha.
+         3. Separar usuários em dois grupos, controle e teste. Para um dos grupos fazemos uso de medicamentos reais, para outro placebo. Idealmente, os dois grupos teriam característica similares (gênero, idade, mesmo estilo condição de vida etc).
+         4. É impossível testar o efeito de medicamentos placebo.
+
+
+OIS (PG 209)
+
+
+4.17, 4.18, 4.19, 4.29, 4.30
